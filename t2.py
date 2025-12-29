@@ -290,7 +290,7 @@ def get_pay_link(amount, product_name):
         "amount": str(amount),
         "expires_in": 3600,
         "paid_btn_name": "openBot",
-        "paid_btn_url": "https://t.me/sdfsdfsdfsfdsdfdsdfs_bot",
+        "paid_btn_url": "https://t.me/walid_shopBot",
         "payload": product_name,
         "allow_comments": False,
         "allow_anonymous": True
