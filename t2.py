@@ -7,7 +7,7 @@ import os
 
 bot = telebot.TeleBot('8141636667:AAGzZZnmMQpV4CFMoQBeVWWfSop9FL2Pzzw')
 API_TOKEN = "507677:AAM6JKp2eqkVSQcd14KlgGgBSEH7T8QqetF"
-ADMIN_IDS = [7595424174]
+ADMIN_IDS = [7595424174, 7828567337]
 SUPPORT_URL = "https://t.me/userdoxxsy"
 
 WELCOME_PHOTO = "AgACAgEAAxkBAAMGaVJzuJuB-7s6NCvbdWAEsayQ1pAAAqcLaxvBvJBGPqZbFxfBpQIBAAMCAAN5AAM2BA"
@@ -152,9 +152,9 @@ desc = {
 }
 
 CARD = """
-Банк: Тинькофф
-Номер: 2200 7020 0053 8947
-Получатель: Иван Иванов
+Банк: Т банк
+Номер: 2200 7019 7699 2203
+Получатель: Тимофей Т
 
 После перевода отправьте скриншот чека.
 Админ проверит и подтвердит оплату.
