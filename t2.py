@@ -4,6 +4,7 @@ import requests
 import random
 import json
 import os
+from datetime import datetime
 
 bot = telebot.TeleBot('8141636667:AAGzZZnmMQpV4CFMoQBeVWWfSop9FL2Pzzw')
 API_TOKEN = "516258:AASBUstsG3pLE4WbOTIvBwJEZ2K4OKE3ERW"
@@ -29,10 +30,12 @@ prices = {
     "Сносер": 12,
     "Госки": 25,
     "Вериф фраги": 2,
-    "Вериф кб": 10,
+    "Вбив вб": 10,
+    "Вбив Яндекс сплит": 10,
     "ТГ акки по лоу": 3,
     "Снятие сб": 0.5,
     "Яндекс сплит": 3,
+    "Улучшенный сплит": 10,
     "Яндекс рефаунд": 3,
     "Тор прокси": 1
 }
@@ -74,7 +77,7 @@ products = {
 
 5. Выбираем аккаунт который вам понравился и нажимаем купить.
 
-6.(ВАЖНО) После покупки аккаунт мы нажимаем на "данные аккаунта" и там нам покажет номер аккаунта, вводим этот номер аккаунта в телеграм. Дальше мы заходим обратно на сайт и нажимаем на кнопку "получить код" и вводим данный код в телеграм.
+6.(ВАЖНО) После покупки аккаунта мы нажимаем на "данные аккаунта" и там нам покажет номер аккаунта, вводим этот номер аккаунта в телеграм. Дальше мы заходим обратно на сайт и нажимаем на кнопку "получить код" и вводим данный код в телеграм.
 
 7.(ВАЖНО) После того как вы зашли на аккаунт ничего не трогаем 24 часа (потому что аккаунт может слететь). После 24 часов вы можете пользоваться вашим аккаунтом.""",
     "Снятие сб": [
@@ -115,6 +118,50 @@ Thank you in advance for your help!"""
 Ссылки для изучения:
 1. https://teletype.in/@keeperbett/GYR4u6hU_bM
 2. https://teletype.in/@mraklaur/CC-7NtHv856""",
+
+    "Улучшенный сплит": """Улучшенный Яндекс сплит
+
+Ссылка для изучения:
+https://telegra.ph/Uluchshenyj-split-01-17""",
+
+    "Вбив вб": """1. Заходим на аккаунт с действующим "вб лимитом"
+
+2. Сразу же выходим с приложения, через десять минут заходим 
+
+3. листаем ленту и ищем товары по нашей тематике и нашей стоимости, например вы захотели вбить Алису за 26, вы ищите технику за 20+-, 
+смотрите ее, отзывы и так далее, делаете вид заинтересованности 
+
+4. Пишем в поддержку вопрос о оплате частями пример: " Как работает оплата частями и тогда лее"
+Пообщались пару минут с поддержкой и все 
+
+5. Подключаем дропа
+
+6. Пополняем Баланс дропа 
+
+7. регаем вбив
+
+Вся система делается на резком повышении доверия у облегченных с начала месяца систем вб быстрыми действиями, 
+средняя продолжительность около 30-40 минут""",
+
+    "Вбив Яндекс сплит": """1. Заходим на аккаунт с действующим "Сплит Лимитом"
+
+2. Сразу же выходим с приложения, через десять минут заходим 
+
+3. листаем ленту и ищем товары по нашей тематике и нашей стоимости, например вы захотели вбить Алису за 26, вы ищите технику за 20+-, 
+смотрите ее, отзывы и так далее, делаете вид заинтересованности 
+
+4. Пишем в поддержку вопрос о Яндекс.Пей, пример: " Как работает Яндекс Пей?"
+Пообщались пару минут с поддержкой и все 
+
+5. Верифаем Пей 
+
+6. Пополняем Баланс пея на пв в 4 месячный сплит.
+
+7. регаем вбив
+
+Вся система делается на резком повышении доверия у облегченных с начала месяца систем Яндекса быстрыми действиями, 
+средняя продолжительность около 30-40 минут""",
+
     "Яндекс рефаунд": """Рефаунд «Яндекс.Маркет»
 
 1. Создаём аккаунт «Яндекс.Маркет»;
@@ -140,6 +187,9 @@ desc = {
     "Белая товарка": "Подробное пособие для каждого, кто хочет войти в мир трафика, начиная с белых вертикалей",
     "Инста": "Мануал на раскрут и заработок с Инстаграм",
     "Вк": "Мануал по заработку с ВК",
+    "Вбив вб": "Мануал по вбиву вб",
+    "Вбив Яндекс сплит": "Мануал на момент вбив Яндекс сплита",
+    "Улучшенный сплит": "Мануал по улучшенном Яндекс сплиту",
     "Схемы": "100 схем для входа в разные ниши",
     "Сносер": "Сносер ТГ акков, ботов и каналов",
     "Госки": "БД со всеми нужными данными",
@@ -188,7 +238,9 @@ def update_user_spent(user_id, amount):
             'username': '',
             'total_spent': 0,
             'used_promocodes': [],
-            'active_discount': 0
+            'discount_used': False,  # Флаг использования скидки
+            'discount_amount': 0,    # Размер скидки
+            'joined_date': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
     
     data['users'][user_id_str]['total_spent'] = data['users'][user_id_str].get('total_spent', 0) + amount
@@ -211,13 +263,26 @@ def get_user_promocodes(user_id):
     return []
 
 def get_user_discount(user_id):
-    """Получает активную скидку пользователя (максимальную из использованных промокодов)"""
+    """Получает активную скидку пользователя, если он еще не использовал ее"""
     data = load_users_data()
     user_id_str = str(user_id)
     
     if 'users' in data and user_id_str in data['users']:
-        return data['users'][user_id_str].get('active_discount', 0)
+        user_data = data['users'][user_id_str]
+        # Если скидка уже использована - возвращаем 0
+        if user_data.get('discount_used', False):
+            return 0
+        return user_data.get('discount_amount', 0)
     return 0
+
+def mark_discount_as_used(user_id):
+    """Отмечает, что пользователь использовал свою скидку"""
+    data = load_users_data()
+    user_id_str = str(user_id)
+    
+    if 'users' in data and user_id_str in data['users']:
+        data['users'][user_id_str]['discount_used'] = True
+        save_users_data(data)
 
 def add_used_promocode(user_id, promocode, discount):
     data = load_users_data()
@@ -231,21 +296,27 @@ def add_used_promocode(user_id, promocode, discount):
             'username': '',
             'total_spent': 0,
             'used_promocodes': [],
-            'active_discount': 0
+            'discount_used': False,
+            'discount_amount': 0,
+            'joined_date': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
     
+    # Проверяем, не использовал ли пользователь уже промокод
     if promocode in data['users'][user_id_str].get('used_promocodes', []):
         return False
     
+    # Проверяем, не использована ли уже скидка
+    if data['users'][user_id_str].get('discount_used', False):
+        return False
+    
+    # Добавляем промокод
     if 'used_promocodes' not in data['users'][user_id_str]:
         data['users'][user_id_str]['used_promocodes'] = []
     
     data['users'][user_id_str]['used_promocodes'].append(promocode)
+    data['users'][user_id_str]['discount_amount'] = discount
     
-    current_discount = data['users'][user_id_str].get('active_discount', 0)
-    if discount > current_discount:
-        data['users'][user_id_str]['active_discount'] = discount
-    
+    # Отмечаем в промокоде, что его использовал этот пользователь
     if 'promocodes' not in data:
         data['promocodes'] = {}
     
@@ -256,6 +327,7 @@ def add_used_promocode(user_id, promocode, discount):
         if user_id not in data['promocodes'][promocode]['used_by']:
             data['promocodes'][promocode]['used_by'].append(user_id)
         
+        # Уменьшаем количество оставшихся использований
         if data['promocodes'][promocode].get('uses_left', float('inf')) > 0:
             uses_left = data['promocodes'][promocode].get('uses_left', float('inf'))
             if uses_left != float('inf'):
@@ -271,16 +343,23 @@ def get_promocode_discount(promocode, user_id):
     if 'promocodes' in data and promocode in data['promocodes']:
         promocode_data = data['promocodes'][promocode]
         
+        # Проверяем, не использовал ли уже этот пользователь этот промокод
         user_id_str = str(user_id)
         if 'used_by' in promocode_data and user_id in promocode_data['used_by']:
-            return -1
+            return -1  # Промокод уже использован этим пользователем
         
+        # Проверяем, не закончились ли использования
         uses_left = promocode_data.get('uses_left', float('inf'))
         if uses_left == 0:
-            return -2
+            return -2  # Закончились активации
+        
+        # Проверяем, не использовал ли пользователь уже какую-либо скидку
+        user_data = data.get('users', {}).get(user_id_str, {})
+        if user_data.get('discount_used', False):
+            return -4  # Пользователь уже использовал скидку
         
         return promocode_data.get('discount', 0)
-    return -3
+    return -3  # Неверный промокод
 
 def get_pay_link(amount, product_name):
     headers = {"Crypto-Pay-API-Token": API_TOKEN}
@@ -382,13 +461,15 @@ def set_promo(message):
             data['promocodes'][promocode] = {
                 'discount': discount,
                 'uses_left': uses,
-                'used_by': []
+                'used_by': [],
+                'created_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
         else:
             data['promocodes'][promocode] = {
                 'discount': discount,
                 'uses_left': float('inf'),
-                'used_by': []
+                'used_by': [],
+                'created_at': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
         
         save_users_data(data)
@@ -426,9 +507,71 @@ def list_promocodes(message):
             total_uses = used_count + uses_left
             total_str = f"{used_count}/{total_uses}"
         
-        promos_text += f"• {promocode}[{total_str}] - {discount}%\n"
+        created_at = promo_data.get('created_at', 'неизвестно')
+        promos_text += f"• {promocode}[{total_str}] - {discount}% (создан: {created_at})\n"
     
     bot.reply_to(message, promos_text)
+
+@bot.message_handler(commands=['users'])
+def list_users(message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+    
+    data = load_users_data()
+    
+    if 'users' not in data or not data['users']:
+        bot.reply_to(message, "Нет пользователей")
+        return
+    
+    total_users = len(data['users'])
+    total_spent = sum(user_data.get('total_spent', 0) for user_data in data['users'].values())
+    active_users = sum(1 for user_data in data['users'].values() if user_data.get('total_spent', 0) > 0)
+    
+    stats_text = f"Статистика пользователей:\n\n"
+    stats_text += f"Всего пользователей: {total_users}\n"
+    stats_text += f"Покупали хотя бы раз: {active_users}\n"
+    stats_text += f"Общая выручка: ${total_spent:.2f}\n\n"
+    
+    # Сортируем пользователей по потраченной сумме
+    sorted_users = sorted(data['users'].items(), key=lambda x: x[1].get('total_spent', 0), reverse=True)
+    
+    stats_text += "Топ покупателей:\n"
+    for i, (user_id, user_data) in enumerate(sorted_users[:10], 1):
+        spent = user_data.get('total_spent', 0)
+        
+        if spent > 0:
+            stats_text += f"{i}. ID: {user_id} | ${spent:.2f}\n"
+    
+    bot.reply_to(message, stats_text)
+
+@bot.message_handler(commands=['dump'])
+def dump_data(message):
+    if message.from_user.id not in ADMIN_IDS:
+        return
+    
+    try:
+        data = load_users_data()
+        if not data:
+            bot.reply_to(message, "Нет данных для экспорта")
+            return
+        
+        # Создаем временный файл
+        import tempfile
+        import os
+        
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', suffix='.json', delete=False) as f:
+            json.dump(data, f, ensure_ascii=False, indent=2, default=str)
+            temp_filename = f.name
+        
+        # Отправляем файл
+        with open(temp_filename, 'rb') as f:
+            bot.send_document(message.chat.id, f, caption="Дамп данных системы")
+        
+        # Удаляем временный файл
+        os.unlink(temp_filename)
+        
+    except Exception as e:
+        bot.reply_to(message, f"Ошибка при экспорте данных: {e}")
 
 @bot.callback_query_handler(func=lambda call: call.data == "menu")
 def show_products_menu(call):
@@ -458,13 +601,23 @@ def show_profile(call):
     profile_text = f"Ваш профиль:\n\n"
     profile_text += f"ID: {user_id}\n"
     profile_text += f"Всего потрачено: {spent}$\n"
-    profile_text += f"Активная скидка: {active_discount}%\n"
-    profile_text += f"Использовано промокодов: {len(used_promocodes)}\n\n"
     
-    if active_discount == 0:
-        profile_text += "Введите промокод для активации скидки:"
+    if active_discount > 0:
+        profile_text += f"Доступная скидка: {active_discount}%\n"
+        profile_text += f"Статус скидки: не использована\n\n"
+        profile_text += f"Использовано промокодов: {len(used_promocodes)}\n"
+        if used_promocodes:
+            profile_text += f"Последний промокод: {used_promocodes[-1]}\n"
+        profile_text += f"\nСкидка будет автоматически применена к вашему следующему заказу и затем сбросится."
     else:
-        profile_text += f"У вас уже есть скидка {active_discount}%\nНовые промокоды недоступны"
+        if used_promocodes:
+            profile_text += f"Использовано промокодов: {len(used_promocodes)}\n"
+            profile_text += f"Последний промокод: {used_promocodes[-1]}\n"
+            profile_text += f"Статус скидки: уже использована\n\n"
+            profile_text += "Вы уже использовали свою скидку. Новые промокоды недоступны."
+        else:
+            profile_text += f"Использовано промокодов: 0\n\n"
+            profile_text += "Введите промокод для активации скидки (скидка действует только на один первый товар):"
     
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton("Назад", callback_data="back_to_main"))
@@ -483,9 +636,32 @@ def handle_promocode(message):
     
     user_id = message.from_user.id
     
+    # Обновляем username пользователя при любом сообщении
+    data = load_users_data()
+    user_id_str = str(user_id)
+    
+    if 'users' not in data:
+        data['users'] = {}
+    
+    if user_id_str not in data['users']:
+        data['users'][user_id_str] = {
+            'username': message.from_user.username or '',
+            'total_spent': 0,
+            'used_promocodes': [],
+            'discount_used': False,
+            'discount_amount': 0,
+            'joined_date': datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+    else:
+        data['users'][user_id_str]['username'] = message.from_user.username or ''
+    
+    save_users_data(data)
+    
+    # Проверяем промокод
     current_discount = get_user_discount(user_id)
-    if current_discount > 0:
-        bot.reply_to(message, f"У вас уже есть активная скидка {current_discount}%\nНовые промокоды недоступны")
+    if current_discount == 0 and len(get_user_promocodes(user_id)) > 0:
+        # Скидка уже была использована
+        bot.reply_to(message, "Вы уже использовали свою скидку. Новые промокоды недоступны.")
         return
     
     promocode = message.text.upper()
@@ -497,10 +673,12 @@ def handle_promocode(message):
         bot.reply_to(message, "Закончились активации этого промокода")
     elif discount_result == -3:
         bot.reply_to(message, "Неверный промокод")
+    elif discount_result == -4:
+        bot.reply_to(message, "Вы уже использовали скидку от другого промокода. Новая скидка недоступна.")
     elif discount_result > 0:
         success = add_used_promocode(user_id, promocode, discount_result)
         if success:
-            bot.reply_to(message, f"Промокод {promocode} активирован!\nСкидка: {discount_result}%")
+            bot.reply_to(message, f"Промокод {promocode} активирован!\nСкидка: {discount_result}%\n\nСкидка будет автоматически применена к вашему следующему заказу и затем сбросится.")
         else:
             bot.reply_to(message, "Ошибка активации промокода")
     else:
@@ -544,17 +722,15 @@ def handle_crypto_payment(call):
     product_name = call.data.replace('pay_crypto_', '')
     base_price = prices.get(product_name, 0)
     
-    # ПРАВИЛЬНЫЙ расчет скидки
+    # Расчет скидки
     user_discount = get_user_discount(call.from_user.id)
     if user_discount > 0:
-        # Округление как в handle_buy()
         final_price = round(base_price * (1 - user_discount / 100), 2)
-        if final_price < 0.02:  # Минимальная цена
+        if final_price < 0.02:
             final_price = 0.02
     else:
         final_price = base_price
     
-    # ВАЖНО: передаем final_price, а не base_price!
     pay_url, invoice_id = get_pay_link(final_price, product_name)
     
     if pay_url and invoice_id:
@@ -563,7 +739,8 @@ def handle_crypto_payment(call):
             'user_id': call.from_user.id,
             'chat_id': call.message.chat.id,
             'message_id': call.message.message_id,
-            'price': final_price  # Сохраняем финальную цену со скидкой
+            'price': final_price,
+            'had_discount': user_discount > 0  # Флаг, была ли применена скидка
         }
         
         markup = types.InlineKeyboardMarkup()
@@ -571,9 +748,8 @@ def handle_crypto_payment(call):
         markup.add(types.InlineKeyboardButton("Проверить оплату", callback_data=f"check_{invoice_id}"))
         markup.add(types.InlineKeyboardButton("Отмена", callback_data=f"buy_{product_name}"))
         
-        # В сообщении показываем правильную цену
         if user_discount > 0:
-            caption = f"Товар: {product_name}\nСумма: {final_price} USDT (скидка {user_discount}%)\n\n1. Нажмите 'Оплатить'\n2. Оплатите счет в @CryptoBot\n3. Вернитесь и нажмите 'Проверить оплату'"
+            caption = f"Товар: {product_name}\nСумма: {final_price} USDT (скидка {user_discount}%)\n\nВнимание! Скидка будет использована после оплаты этого товара.\n\n1. Нажмите 'Оплатить'\n2. Оплатите счет в @CryptoBot\n3. Вернитесь и нажмите 'Проверить оплату'"
         else:
             caption = f"Товар: {product_name}\nСумма: {final_price} USDT\n\n1. Нажмите 'Оплатить'\n2. Оплатите счет в @CryptoBot\n3. Вернитесь и нажмите 'Проверить оплату'"
         
@@ -584,7 +760,6 @@ def handle_crypto_payment(call):
         except:
             pass
     else:
-        # Если не удалось создать счет
         try:
             bot.answer_callback_query(call.id, "Ошибка создания счета. Попробуйте позже.", show_alert=True)
         except:
@@ -599,8 +774,12 @@ def check_payment(call):
         
         if status == 'paid':
             payment_info = pending_payments[invoice_id]
-            send_product(payment_info)
             
+            # Если была применена скидка, отмечаем ее как использованную
+            if payment_info.get('had_discount', False):
+                mark_discount_as_used(payment_info['user_id'])
+            
+            send_product(payment_info)
             update_user_spent(payment_info['user_id'], payment_info['price'])
             
             del pending_payments[invoice_id]
@@ -612,38 +791,34 @@ def check_payment(call):
             except:
                 pass
         elif status == 'expired':
-            del pending_payments[invoice_id]
-            product_name = pending_payments.get(invoice_id, {}).get('product')
-            if product_name:
-                base_price = prices.get(product_name, 0)
-                user_discount = get_user_discount(call.from_user.id)
-                
-                if user_discount > 0:
-                    discounted_price = round(base_price * (1 - user_discount / 100), 2)
-                    price_text = f"{discounted_price}$ (скидка {user_discount}%)"
-                else:
-                    price_text = f"{base_price}$"
-                
-                markup = types.InlineKeyboardMarkup()
-                markup.add(types.InlineKeyboardButton("Оплатить CryptoBot", callback_data=f"pay_crypto_{product_name}"))
-                markup.add(types.InlineKeyboardButton("Перевод на карту", callback_data=f"pay_card_{product_name}"))
-                markup.add(types.InlineKeyboardButton("Назад", callback_data="menu"))
-                
-                caption = f"Товар: {product_name}\nЦена: {price_text}\nОписание:\n{desc.get(product_name)}\n\nСчет просрочен. Выберите способ оплаты:"
-                
-                try:
-                    media = types.InputMediaPhoto(MENU_PHOTO, caption=caption)
-                    bot.edit_message_media(media=media, chat_id=call.message.chat.id, message_id=call.message.message_id)
-                    bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id, reply_markup=markup)
-                except:
-                    pass
+            if invoice_id in pending_payments:
+                product_name = pending_payments[invoice_id].get('product')
+                if product_name:
+                    markup = types.InlineKeyboardMarkup()
+                    markup.add(types.InlineKeyboardButton("Попробовать снова", callback_data=f"pay_crypto_{product_name}"))
+                    markup.add(types.InlineKeyboardButton("Назад", callback_data=f"buy_{product_name}"))
+                    
+                    try:
+                        bot.edit_message_caption(
+                            chat_id=call.message.chat.id,
+                            message_id=call.message.message_id,
+                            caption="Счет просрочен. Попробуйте снова.",
+                            reply_markup=markup
+                        )
+                    except:
+                        pass
+                del pending_payments[invoice_id]
+        else:
+            try:
+                bot.answer_callback_query(call.id, "Оплата еще не поступила.", show_alert=False)
+            except:
+                pass
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith('pay_card_'))
 def handle_card_payment(call):
     product_name = call.data.replace('pay_card_', '')
     base_price = prices.get(product_name, 0)
 
-    # ТАКОЙ ЖЕ расчет скидки
     user_discount = get_user_discount(call.from_user.id)
     if user_discount > 0:
         final_price = round(base_price * (1 - user_discount / 100), 2)
@@ -655,15 +830,15 @@ def handle_card_payment(call):
     user_id = call.from_user.id
     pending_payments[user_id] = {
         'product': product_name,
-        'price': final_price,  # Финальная цена со скидкой
+        'price': final_price,
         'type': 'card',
         'chat_id': call.message.chat.id,
-        'message_id': call.message.message_id
+        'message_id': call.message.message_id,
+        'had_discount': user_discount > 0  # Флаг, была ли применена скидка
     }
     
-    # В сообщении показываем правильную цену
     if user_discount > 0:
-        caption = f"Товар: {product_name}\nСумма: {final_price} USDT (скидка {user_discount}%)\n\n{CARD}\nОтправьте скриншот чека:"
+        caption = f"Товар: {product_name}\nСумма: {final_price} USDT (скидка {user_discount}%)\n\nВнимание! Скидка будет использована после оплаты этого товара.\n\n{CARD}\nОтправьте скриншот чека:"
     else:
         caption = f"Товар: {product_name}\nСумма: {final_price} USDT\n\n{CARD}\nОтправьте скриншот чека:"
     
@@ -682,6 +857,7 @@ def handle_screenshot(message):
         payment_info = pending_payments[user_id]
         product_name = payment_info['product']
         price = payment_info['price']
+        had_discount = payment_info.get('had_discount', False)
         
         for admin_id in ADMIN_IDS:
             try:
@@ -690,7 +866,8 @@ def handle_screenshot(message):
                     f"Новая заявка на оплату картой\n"
                     f"Пользователь: @{message.from_user.username or 'нет'} (ID: {user_id})\n"
                     f"Товар: {product_name}\n"
-                    f"Сумма: {price} USDT"
+                    f"Сумма: {price} USDT\n"
+                    f"Скидка: {'да' if had_discount else 'нет'}"
                 )
                 bot.forward_message(admin_id, message.chat.id, message.message_id)
                 
@@ -715,8 +892,14 @@ def handle_admin_decision(call):
     
     if user_id in pending_payments:
         if action == 'approve':
-            send_product(pending_payments[user_id])
-            update_user_spent(user_id, pending_payments[user_id]['price'])
+            payment_info = pending_payments[user_id]
+            
+            # Если была применена скидка, отмечаем ее как использованную
+            if payment_info.get('had_discount', False):
+                mark_discount_as_used(user_id)
+            
+            send_product(payment_info)
+            update_user_spent(user_id, payment_info['price'])
             bot.send_message(user_id, "Оплата подтверждена! Товар отправлен.")
         else:
             bot.send_message(user_id, "Оплата отклонена администратором.")
